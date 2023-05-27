@@ -26,13 +26,13 @@
         <tbody>
             @foreach(var item in Model)
             {
-                int i = 0;
+                
                 <tr>
                     @*<td>@</td>*@
                     <td>@item.code</td>
                     <td>@item.Name</td>
 
-                    <partial name="ButtonsViewPartial" model="@item.Id"></partial>
+                    <partial name="ButtonsViewPartial" model="@item.Id.ToString()"></partial>
                 </tr>
             }
         </tbody>

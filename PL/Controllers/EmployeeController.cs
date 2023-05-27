@@ -78,6 +78,7 @@ namespace PL.Controllers
             {
                 return NotFound();
             }
+            DocumentsSettings.DeleteFile("images", row.ImageUrl);
             await context.EmployeeRepo.DeleteEntity(row);
 
             return RedirectToAction("Index");

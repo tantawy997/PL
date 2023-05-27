@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject SignInManager<ApplicationUser> signInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,6 +33,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Employee"
                                asp-action="Index">Employees</a>
                         </li>
+                        @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User"
+                               asp-action="Index">User</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Roles"
+                               asp-action="Index">Roles</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account"
+                               asp-action="SignOuT">SignOut</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

@@ -48,7 +48,7 @@
                 <th scope="col">@Html.DisplayNameFor(a=>a.HireDate)</th>
                 <th scope="col">@Html.DisplayNameFor(a=>a.address)</th>
                 <th scope="col">@Html.DisplayNameFor(a=>a.age)</th>
-                <th scope="col">@Html.DisplayNameFor(a=>a.ImageUrl)</th>
+                <th scope="col">@Html.DisplayNameFor(a=>a.Image)</th>
 
                 <th scope="col">@Html.DisplayNameFor(a=>a.isActive)</th>
                 <th scope="col">@Html.DisplayNameFor(a=>a.salary)</th>
@@ -70,13 +70,13 @@
                     <td>@item.address</td>
                     <td>@item.age</td>
                     <td>
-                        @*<img src="~/Files/images/@item.ImageUrl">*@
+                        <img src="~/Files/images/@item.ImageUrl" class="img-circle" alt="@item.Name Image">
                     </td>
                     <td>@item.isActive</td>
                     <td>@item.salary</td>
                     <td>@item.phoneNumber</td>
 
-                    <partial name="ButtonsViewPartial"  model="@item.Id"></partial>
+                    <partial name="ButtonsViewPartial"  model="@item.Id.ToString()"></partial>
                 </tr>
             }
         </tbody>
