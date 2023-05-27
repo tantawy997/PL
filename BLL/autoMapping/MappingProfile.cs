@@ -14,7 +14,7 @@ namespace BLL.autoMapping
     {
         public MappingProfile()
         {
-            CreateMap<employee, EmployeeViewModel>().ReverseMap();
+            CreateMap<Employee, EmployeeViewModel>().ReverseMap();
                 
 
             CreateMap<Department, DepartmentViewModel>().ReverseMap();  
