@@ -4,6 +4,7 @@ using DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PL.Helper;
+using PL.Models;
 using System.Threading.Tasks;
 
 namespace PL.Controllers
@@ -13,15 +14,18 @@ namespace PL.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSettings emailSett;
+		private readonly ISmsService smsService;
 
-        public AccountController(UserManager<ApplicationUser> _userManager,
+		public AccountController(UserManager<ApplicationUser> _userManager,
             SignInManager<ApplicationUser> _signInManager, 
-            IEmailSettings _emailSettings)
+            IEmailSettings _emailSettings, 
+            ISmsService _smsService)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             emailSett = _emailSettings;
-        }
+			smsService = _smsService;
+		}
 
         public IActionResult SignUp()
         {
@@ -159,7 +163,36 @@ namespace PL.Controllers
             return View(resetPasswordViewModel);
         }
 
-        public IActionResult ResetPasswordDone()
+		[HttpPost]
+		public async Task<IActionResult> SendSms(ForgetPasswordViewModel forgetPasswordViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await userManager.FindByEmailAsync(forgetPasswordViewModel.Email);
+				if (user is not null)
+				{
+					var token = await userManager.GeneratePasswordResetTokenAsync(user);
+					var resetPasswordLink = Url.Action("ResetPassword", "Account", new
+					{ email = forgetPasswordViewModel.Email, token = token }, Request.Scheme);
+					var sms = new SmsMessage()
+					{
+                        PhoneNumber = user.PhoneNumber,
+                        body = resetPasswordLink
+
+					};
+
+					//EmailSettings.SendEmail(email);
+					smsService.SendSms(sms);
+
+					return Ok("check your phone");
+
+				}
+				ModelState.AddModelError(string.Empty, "Invalid Email");
+
+			}
+			return View(forgetPasswordViewModel);
+		}
+		public IActionResult ResetPasswordDone()
         {
             return View();
         }

@@ -18,6 +18,9 @@ using PL.Helper;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<TwoilioSetting>(builder.Configuration.GetSection("twilio"));
+builder.Services.AddTransient<ISmsService, SmsService>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IDepartmentRepo, DepartmentRepo>();
