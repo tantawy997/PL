@@ -12,12 +12,15 @@ namespace PL.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IEmailSettings emailSett;
 
         public AccountController(UserManager<ApplicationUser> _userManager,
-            SignInManager<ApplicationUser> _signInManager)
+            SignInManager<ApplicationUser> _signInManager, 
+            IEmailSettings _emailSettings)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            emailSett = _emailSettings;
         }
 
         public IActionResult SignUp()
@@ -112,12 +115,13 @@ namespace PL.Controllers
                         { email = forgetPasswordViewModel.Email, token =token },Request.Scheme);
                     var email = new Email()
                     {
-                        title = "Reset Password",
+                        Subject = "Reset Password",
                         body = resetPasswordLink,
                         to = forgetPasswordViewModel.Email
                     };
 
-                    EmailSettings.SendEmail(email);
+                    //EmailSettings.SendEmail(email);
+                    emailSett.SendEmail(email);
                     return RedirectToAction("CompleteResetPassword");
 
                 }

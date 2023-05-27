@@ -5,6 +5,6 @@ namespace PL.Helper
 {
     public interface IEmailSettings
     {
-        Task  SendEmail(Email email);
+        void  SendEmail(Email email);
     }
 }

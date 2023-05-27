@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PL.eSettings;
+using PL.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         o.AccessDeniedPath = new PathString("/Shared/Error");
     });
 builder.Services.Configure<EmailSet>(builder.Configuration.GetSection("MailSettings"));
-
+builder.Services.AddTransient<IEmailSettings, EmailSetting>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(o =>
 {

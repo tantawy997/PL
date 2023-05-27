@@ -10,11 +10,13 @@ namespace DAL.Entities
     {
         public int id { get; set; }
 
-        public string title { get; set; }
+		public string Subject { get; set; }
 
-        public string body { get; set; }
+		public string body { get; set; }
 
         public string to { get; set; }
 
-    }
+		//IList<IFormFile>? attachments { get; set; } = null;
+
+	}
 }
